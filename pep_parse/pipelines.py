@@ -22,6 +22,8 @@ class PepParsePipeline:
     def open_spider(self, spider):
         """Инициализирует счётчик статусов при запуске паука."""
         self.status_counter = Counter()
+        self.results_dir = BASE_DIR / RESULTS_DIR
+        self.results_dir.mkdir(exist_ok=True)
 
     def process_item(self, item, spider):
         """Обрабатывает Item и увеличивает счётчик статуса."""
@@ -31,15 +33,17 @@ class PepParsePipeline:
 
     def close_spider(self, spider):
         """Создаёт CSV-файл со сводкой по статусам PEP."""
-        results_dir = BASE_DIR / RESULTS_DIR
-        results_dir.mkdir(exist_ok=True)
-
-        now = dt.datetime.now()
-        now_formatted = now.strftime(DATETIME_FORMAT)
+        now_formatted = dt.datetime.now().strftime(DATETIME_FORMAT)
         file_name = STATUS_SUMMARY_FILE_NAME.format(
             datetime=now_formatted
         )
-        file_path = results_dir / file_name
+        file_path = self.results_dir / file_name
+
+        results = [
+            STATUS_SUMMARY_HEADER,
+            *self.status_counter.items(),
+            (TOTAL_STATUS, sum(self.status_counter.values())),
+        ]
 
         with open(
             file_path,
@@ -47,9 +51,5 @@ class PepParsePipeline:
             encoding=DEFAULT_ENCODING,
             newline='',
         ) as file:
-            writer = csv.writer(file)
-            writer.writerow(STATUS_SUMMARY_HEADER)
-            writer.writerows(self.status_counter.items())
-            writer.writerow(
-                (TOTAL_STATUS, sum(self.status_counter.values()))
-            )
+            writer = csv.writer(file, dialect=csv.unix_dialect)
+            writer.writerows(results)

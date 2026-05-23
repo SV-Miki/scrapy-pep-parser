@@ -12,14 +12,15 @@ from pep_parse.constants import (
     PEP_CSV_EXPORTER,
     PEP_FILE_NAME,
     PEP_PARSE_PIPELINE,
+    PEP_SPIDERS_MODULE,
     RESULTS_DIR,
 )
 
 
 BOT_NAME = 'pep_parse'
 
-SPIDER_MODULES = ['pep_parse.spiders']
-NEWSPIDER_MODULE = 'pep_parse.spiders'
+SPIDER_MODULES = [PEP_SPIDERS_MODULE]
+NEWSPIDER_MODULE = PEP_SPIDERS_MODULE
 
 ROBOTSTXT_OBEY = True
 
