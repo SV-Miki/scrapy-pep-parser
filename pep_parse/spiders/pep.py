@@ -31,7 +31,12 @@ class PepSpider(scrapy.Spider):
 
     def parse_pep(self, response):
         """Парсит страницу PEP и формирует Item."""
-        title = response.css(PEP_TITLE_SELECTOR).get(default='').strip()
+        title = (
+            response.css(PEP_TITLE_SELECTOR)
+            .xpath('string(.)')
+            .get(default='')
+            .strip()
+        )
         status = response.xpath(PEP_STATUS_SELECTOR).get(default='').strip()
         number = re.search(r'pep-(\d+)', response.url).group(1)
 

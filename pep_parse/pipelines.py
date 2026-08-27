@@ -19,11 +19,14 @@ from pep_parse.constants import (
 class PepParsePipeline:
     """Pipeline для подсчёта количества PEP по статусам."""
 
+    def __init__(self):
+        """Подготавливает директорию для результатов."""
+        self.results_dir = BASE_DIR / RESULTS_DIR
+        self.results_dir.mkdir(exist_ok=True)
+
     def open_spider(self, spider):
         """Инициализирует счётчик статусов при запуске паука."""
         self.status_counter = Counter()
-        self.results_dir = BASE_DIR / RESULTS_DIR
-        self.results_dir.mkdir(exist_ok=True)
 
     def process_item(self, item, spider):
         """Обрабатывает Item и увеличивает счётчик статуса."""

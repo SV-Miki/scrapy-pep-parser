@@ -36,7 +36,7 @@ PEP_BASE_URL = 'https://peps.python.org/'
 
 # CSS- и XPath-селекторы для парсинга PEP.
 PEP_LINK_SELECTOR = 'a[href^="pep-"]::attr(href)'
-PEP_TITLE_SELECTOR = 'h1.page-title::text'
+PEP_TITLE_SELECTOR = 'h1.page-title'
 PEP_STATUS_SELECTOR = (
     '//dt[contains(normalize-space(), "Status")]'
     '/following-sibling::dd[1]//text()'
@@ -49,6 +49,5 @@ DATETIME_FORMAT = '%Y-%m-%d_%H-%M-%S'
 
 
 # Настройки Scrapy.
-PEP_SPIDERS_MODULE = 'pep_parse.spiders'
 PEP_PARSE_PIPELINE = 'pep_parse.pipelines.PepParsePipeline'
 PEP_CSV_EXPORTER = 'pep_parse.exporters.PepCsvItemExporter'
