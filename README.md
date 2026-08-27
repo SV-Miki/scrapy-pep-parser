@@ -23,7 +23,7 @@
 ## Структура проекта
 
 ```text
-scrapy_parser_pep/
+scrapy-pep-parser/
 ├── pep_parse/
 │   ├── spiders/
 │   │   └── pep.py
@@ -82,8 +82,8 @@ pep_*.csv   status_summary_*.csv
 Клонировать репозиторий:
 
 ```bash
-git clone git@github.com:SV-Miki/scrapy_parser_pep.git
-cd scrapy_parser_pep
+git clone git@github.com:SV-Miki/scrapy-pep-parser.git
+cd scrapy-pep-parser
 ```
 
 Создать виртуальное окружение:
